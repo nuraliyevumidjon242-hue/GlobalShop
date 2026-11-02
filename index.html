@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlobalShop - Next-Gen Multi-Language E-Commerce Platform (2026)</title>
+  <meta name="description" content="GlobalShop: Hochmoderne, skalierbare E-Commerce Plattform mit 4 Sprachen (DE, EN, UZ, RU), Stripe Checkout, Sprachsuche, KI-Shopping Assistant und Live-Sendungsverfolgung.">
+
+  <!-- Manifest for PWA Support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#6366f1">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Light Effects -->
+  <div class="ambient-bg">
+    <div class="ambient-circle-1"></div>
+    <div class="ambient-circle-2"></div>
+    <div class="ambient-circle-3"></div>
+  </div>
+
+  <!-- Canvas Confetti Container -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       Header & Global Navigation
+       ========================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <!-- Logo -->
+      <a href="#" class="logo-wrapper" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="logo-icon">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <div class="logo-text">
+          Global<span class="gradient-text">Shop</span>
+          <span class="logo-badge">2026</span>
+        </div>
+      </a>
+
+      <!-- Instant Search with Voice Search Mic -->
+      <div class="header-search">
+        <div class="search-input-wrapper">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" id="headerSearchInput" placeholder="Mahsulotlarni qidirish yoki ovoz bilan ayting..." data-i18n="search_placeholder">
+          <div class="search-actions-right">
+            <button class="btn-mic-search" id="btnVoiceSearch" onclick="App.toggleVoiceSearch()" title="Ovozli qidiruv">
+              <i class="fa-solid fa-microphone"></i>
+            </button>
+            <button class="search-clear-btn" id="searchClearBtn" onclick="App.clearSearch()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Actions -->
+      <div class="header-actions">
+        <!-- Pitch Deck Presentation Button -->
+        <button class="btn btn-pitch-deck" id="btnOpenPresentation" onclick="PresentationController.open(); AudioFX.playClick();">
+          <i class="fa-solid fa-chalkboard-user"></i> <span>10-Slayd Deck</span>
+        </button>
+
+        <!-- Language Selector -->
+        <div class="select-dropdown">
+          <button class="select-btn" id="langSelectBtn">
+            🇺🇿 UZ <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+          </button>
+          <div class="dropdown-menu" id="langDropdown">
+            <button class="dropdown-item" data-lang="uz" onclick="store.setLanguage('uz')">
+              <span class="flag-icon">🇺🇿</span> O'zbekcha
+            </button>
+            <button class="dropdown-item" data-lang="de" onclick="store.setLanguage('de')">
+              <span class="flag-icon">🇩🇪</span> Deutsch
+            </button>
+            <button class="dropdown-item" data-lang="en" onclick="store.setLanguage('en')">
+              <span class="flag-icon">🇬🇧</span> English
+            </button>
+            <button class="dropdown-item" data-lang="ru" onclick="store.setLanguage('ru')">
+              <span class="flag-icon">🇷🇺</span> Русский
+            </button>
+          </div>
+        </div>
+
+        <!-- Currency Selector -->
+        <div class="select-dropdown">
+          <button class="select-btn" id="currencySelectBtn">
+            USD ($) <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+          </button>
+          <div class="dropdown-menu" id="currencyDropdown">
+            <button class="dropdown-item" data-curr="USD" onclick="store.setCurrency('USD')">USD ($)</button>
+            <button class="dropdown-item" data-curr="EUR" onclick="store.setCurrency('EUR')">EUR (€)</button>
+            <button class="dropdown-item" data-curr="UZS" onclick="store.setCurrency('UZS')">UZS (so'm)</button>
+            <button class="dropdown-item" data-curr="RUB" onclick="store.setCurrency('RUB')">RUB (₽)</button>
+          </div>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button class="btn btn-secondary btn-icon" id="themeToggleBtn" onclick="store.toggleTheme(); AudioFX.playClick();" title="Mavzuni o'zgartirish">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+
+        <!-- Wishlist -->
+        <button class="btn btn-secondary btn-icon" id="btnHeaderWishlist" onclick="App.openWishlistModal(); AudioFX.playClick();" title="Saralanganlar">
+          <i class="fa-solid fa-heart"></i>
+          <span class="badge-count" id="wishlistBadgeHeader" style="display: none;">0</span>
+        </button>
+
+        <!-- User Profile / Login -->
+        <button class="btn btn-secondary" id="userNavBtn" style="padding: 0.5rem 0.9rem; font-size: 0.85rem;">
+          <i class="fa-solid fa-user"></i> <span data-i18n="nav_login">Kirish</span>
+        </button>
+
+        <!-- Admin Portal (Dynamic) -->
+        <button class="btn btn-secondary" id="adminNavLink" onclick="AdminController.open()" style="display: none; padding: 0.5rem 0.9rem; font-size: 0.85rem; border-color: var(--secondary);">
+          <i class="fa-solid fa-shield-halved" style="color: var(--secondary);"></i> Admin
+        </button>
+
+        <!-- Cart Trigger -->
+        <button class="btn btn-primary btn-icon" id="btnCartTrigger" onclick="CartController.open(); AudioFX.playClick();" title="Savatcha">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge-count" id="cartBadgeHeader" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Hero Section
+       ========================================================================== -->
+  <section class="hero-section">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fa-solid fa-bolt" style="color: var(--warning);"></i>
+          <span data-i18n="hero_badge">2026-yilgi Yangi Avlod Global Tijorat</span>
+        </div>
+
+        <h1 class="hero-title" data-i18n="hero_title">
+          Chegarasiz Savdo va <span class="gradient-text">Ko'p Tilli</span> Imkoniyat
+        </h1>
+
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          O'zbekiston, Germaniya va butun dunyo bo'ylab tovarlarni ko'p valyutada, xavfsiz to'lov, AI yordamchi va ovozli qidiruv bilan xarid qiling.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#catalogSection" class="btn btn-primary" style="padding: 0.85rem 1.8rem; font-size: 1rem;">
+            <i class="fa-solid fa-bag-shopping"></i> <span data-i18n="hero_btn_shop">Xaridni boshlash</span>
+          </a>
+          <button class="btn btn-glass" onclick="PresentationController.open(); AudioFX.playClick();" style="padding: 0.85rem 1.6rem; font-size: 1rem;">
+            <i class="fa-solid fa-presentation-screen"></i> <span data-i18n="hero_btn_pitch">Germaniya Standartidagi Taqdimot</span>
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h4 class="gradient-text">99.8%</h4>
+            <p data-i18n="stat_clients">Mamnun Mijozlar</p>
+          </div>
+          <div class="stat-item">
+            <h4 class="gradient-text">4 Tilda</h4>
+            <p>DE • EN • UZ • RU</p>
+          </div>
+          <div class="stat-item">
+            <h4 class="gradient-text">Stripe PCI</h4>
+            <p data-i18n="stat_security">To'lov Himoyasi</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Showcase Card -->
+      <div class="hero-showcase">
+        <div class="floating-pill pill-1">
+          <i class="fa-solid fa-shield-check"></i> 100% Kafolatlangan
+        </div>
+        <div class="floating-pill pill-2">
+          <i class="fa-solid fa-microphone"></i> Ovozli Qidiruv &amp; AI
+        </div>
+
+        <div class="showcase-card">
+          <span class="showcase-badge">TREND 2026</span>
+          <div class="showcase-img-wrap">
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=80" alt="Showcase" class="showcase-img">
+          </div>
+          <div class="showcase-meta">
+            <span class="showcase-cat">Apple Eco</span>
+            <div class="stars" style="color: #fbbf24; font-size: 0.85rem;">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (4.9)
+            </div>
+          </div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">MacBook Pro 16 M3 Max Ultra</h3>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+            <div class="showcase-price">$2,499.00</div>
+            <button class="btn btn-primary" onclick="store.addToCart('prod_1'); showToast('Savatga qo\'shildi!', 'success');" style="padding: 0.5rem 1rem;">
+              <i class="fa-solid fa-cart-plus"></i> Savatga
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Shop Controls, Category Filters & Price Slider
+       ========================================================================== -->
+  <section class="shop-controls-section" id="catalogSection">
+    <div class="container controls-bar">
+      <!-- Category Tabs -->
+      <div class="category-tabs">
+        <button class="tab-btn active" data-category="all" onclick="App.filterByCategory('all')">
+          <i class="fa-solid fa-layer-group"></i> <span data-i18n="cat_all">Barchasi</span>
+        </button>
+        <button class="tab-btn" data-category="electronics" onclick="App.filterByCategory('electronics')">
+          <i class="fa-solid fa-laptop"></i> <span data-i18n="cat_electronics">Elektronika</span>
+        </button>
+        <button class="tab-btn" data-category="fashion" onclick="App.filterByCategory('fashion')">
+          <i class="fa-solid fa-shirt"></i> <span data-i18n="cat_fashion">Kiyim-kechak</span>
+        </button>
+        <button class="tab-btn" data-category="home" onclick="App.filterByCategory('home')">
+          <i class="fa-solid fa-couch"></i> <span data-i18n="cat_home">Uy va Oshxona</span>
+        </button>
+        <button class="tab-btn" data-category="accessories" onclick="App.filterByCategory('accessories')">
+          <i class="fa-solid fa-glasses"></i> <span data-i18n="cat_accessories">Aksessuarlar</span>
+        </button>
+        <button class="tab-btn" data-category="books" onclick="App.filterByCategory('books')">
+          <i class="fa-solid fa-book"></i> <span data-i18n="cat_books">Kitoblar</span>
+        </button>
+      </div>
+
+      <!-- Advanced Price Slider & Checkboxes -->
+      <div class="filter-dropdowns">
+        <!-- Price Slider -->
+        <div class="price-slider-wrap">
+          <span data-i18n="filter_price_max">Maks narx</span>:
+          <input type="range" min="50" max="3000" step="50" value="3000" id="priceRangeSlider" class="price-range-input" oninput="App.handlePriceRange(this.value)">
+          <strong id="priceSliderVal" style="color: var(--primary-light);">$3,000.00</strong>
+        </div>
+
+        <!-- Discounts only checkbox -->
+        <label class="filter-checkbox-label">
+          <input type="checkbox" id="chkDiscountOnly" onchange="App.toggleDiscountFilter(this.checked)">
+          <span data-i18n="filter_discount_only">Chegirmalar</span>
+        </label>
+
+        <!-- In stock only checkbox -->
+        <label class="filter-checkbox-label">
+          <input type="checkbox" id="chkInStockOnly" onchange="App.toggleStockFilter(this.checked)">
+          <span data-i18n="filter_in_stock_only">Mavjud</span>
+        </label>
+
+        <!-- Sorting -->
+        <select class="sort-select" onchange="App.handleSort(this.value)">
+          <option value="default" data-i18n="sort_default">Odatiy saralash</option>
+          <option value="price_asc" data-i18n="sort_price_asc">Arzondan qimmatga</option>
+          <option value="price_desc" data-i18n="sort_price_desc">Qimmatdan arzonga</option>
+          <option value="rating" data-i18n="sort_rating">Yuqori reyting bo'yicha</option>
+          <option value="name" data-i18n="sort_name">Nomi bo'yicha (A-Z)</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Product Grid Section
+       ========================================================================== -->
+  <main class="products-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span data-i18n="nav_catalog">Katalog</span> & <span class="gradient-text">Top Mahsulotlar</span>
+          </h2>
+        </div>
+        <div class="products-count" id="productsCount">10 ta mahsulot</div>
+      </div>
+
+      <!-- Dynamic Product Grid -->
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       Cart Drawer (Slide-Over)
+       ========================================================================== -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="CartController.close()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">
+        <i class="fa-solid fa-bag-shopping" style="color: var(--primary-light);"></i>
+        <span data-i18n="cart_title">Savatcha</span>
+      </h3>
+      <button class="btn-close-drawer" onclick="CartController.close()" title="Yopish">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body" id="cartItemsList"></div>
+
+    <div class="drawer-footer">
+      <!-- Coupon Box -->
+      <div class="coupon-box">
+        <input type="text" class="coupon-input" id="cartCouponInput" placeholder="PROMO-KOD" data-i18n="coupon_placeholder">
+        <button class="btn btn-secondary" id="btnApplyCoupon" style="font-size: 0.85rem;">
+          <span data-i18n="btn_apply">Qo'llash</span>
+        </button>
+      </div>
+
+      <!-- Bill Breakdown -->
+      <div class="bill-row">
+        <span data-i18n="subtotal">Oraliq summa</span>
+        <span id="cartSubtotal">$0.00</span>
+      </div>
+      <div class="bill-row" id="cartDiscountRow" style="display: none; color: var(--success);">
+        <span data-i18n="discount">Chegirma</span>
+        <span id="cartDiscount">-$0.00</span>
+      </div>
+      <div class="bill-row">
+        <span data-i18n="shipping">Yetkazib berish</span>
+        <span id="cartShipping">BEPUL</span>
+      </div>
+      <div class="bill-row">
+        <span data-i18n="tax">Soliq (12%)</span>
+        <span id="cartTax">$0.00</span>
+      </div>
+      <div class="bill-row total">
+        <span data-i18n="total">Jami to'lov</span>
+        <span id="cartTotal" style="color: var(--primary-light); font-size: 1.3rem;">$0.00</span>
+      </div>
+
+      <button class="btn btn-primary btn-checkout-full" onclick="CheckoutController.openCheckout(); AudioFX.playClick();">
+        <i class="fa-solid fa-lock"></i> <span data-i18n="btn_checkout">Xaridni rasmiylashtirish</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       Modals
+       ========================================================================== -->
+
+  <!-- Product Detail & Customer Reviews Modal -->
+  <div class="modal-overlay" id="productDetailModal">
+    <div class="modal-container">
+      <button class="modal-close-btn" onclick="App.closeProductDetail()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="productDetailContainer"></div>
+    </div>
+  </div>
+
+  <!-- Stripe Checkout Modal -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-container checkout-modal-container">
+      <button class="modal-close-btn" onclick="CheckoutController.closeCheckout()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <h2 style="font-size: 1.6rem; margin-bottom: 1.25rem;" data-i18n="checkout_title">
+        Xavfsiz To'lov (Stripe Simulyatsiya)
+      </h2>
+
+      <div id="checkoutOrderSummary" style="margin-bottom: 1.5rem;"></div>
+
+      <form id="checkoutForm">
+        <h4 style="font-size: 1rem; margin-bottom: 0.75rem;" data-i18n="shipping_address">Yetkazib berish manzili</h4>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" data-i18n="full_name">To'liq ismingiz</label>
+            <input type="text" class="form-input" id="checkoutFullName" placeholder="Umidjon R." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="phone_number">Telefon raqamingiz</label>
+            <input type="tel" class="form-input" id="checkoutPhone" placeholder="+998 90 123 45 67" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" data-i18n="city">Shahar / Viloyat</label>
+            <input type="text" class="form-input" id="checkoutCity" placeholder="Toshkent yoki Berlin" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="address_line">Ko'cha va uy raqami</label>
+            <input type="text" class="form-input" id="checkoutAddress" placeholder="Amir Temur ko'chasi, 25-uy" required>
+          </div>
+        </div>
+
+        <h4 style="font-size: 1rem; margin: 1rem 0 0.75rem;">To'lov Karta Ma'lumotlari (Stripe)</h4>
+        
+        <div class="form-group">
+          <label class="form-label" data-i18n="card_number">Karta raqami</label>
+          <input type="text" class="form-input" id="cardNumber" placeholder="4242 •••• •••• 4242" value="4242 4242 4242 4242" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" data-i18n="card_exp">Amal qilish muddati (MM/YY)</label>
+            <input type="text" class="form-input" id="cardExp" placeholder="12/28" value="12/28" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="card_cvc">CVC / CVV</label>
+            <input type="password" maxlength="4" class="form-input" id="cardCvc" placeholder="888" value="888" required>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1rem; margin-top: 1rem;">
+          <i class="fa-solid fa-shield-halved"></i> <span data-i18n="btn_pay_now">To'lovni amalga oshirish</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3D Secure SMS Verification Modal -->
+  <div class="modal-overlay" id="smsModal" style="z-index: 350;">
+    <div class="modal-container" style="max-width: 480px; padding: 2rem; text-align: center;">
+      <button class="modal-close-btn" onclick="CheckoutController.close3DSecureModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div style="font-size: 3rem; color: var(--primary-light); margin-bottom: 1rem;">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+      </div>
+
+      <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;" data-i18n="secure_title">3D Secure Xavfsizlik Tasdig'i</h3>
+      <p style="color: var(--text-secondary); font-size: 0.9rem;" data-i18n="secure_desc">
+        Telefoningizga yuborilgan 6 xonali SMS kodni kiriting (Test kodi: 123456):
+      </p>
+
+      <input type="text" maxlength="6" class="form-input sms-code-input" id="smsCodeInput" placeholder="123456" value="123456">
+
+      <button class="btn btn-primary" id="btnConfirmSms" style="width: 100%; padding: 0.85rem; margin-top: 1rem;">
+        <span data-i18n="btn_confirm_sms">SMS Kodni Tasdiqlash</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Official Tax Invoice / Receipt Modal -->
+  <div class="modal-overlay" id="invoiceModal" style="z-index: 360;">
+    <div class="modal-container" style="max-width: 850px; padding: 1.5rem;">
+      <button class="modal-close-btn" onclick="CheckoutController.closeInvoice()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-bottom: 1rem;">
+        <button class="btn btn-primary" onclick="CheckoutController.printReceipt()">
+          <i class="fa-solid fa-print"></i> <span data-i18n="print_receipt">Chekni chop etish</span>
+        </button>
+        <button class="btn btn-secondary" onclick="OrderTracker.trackOrder(CheckoutController.pendingOrder.id); CheckoutController.closeInvoice();">
+          <i class="fa-solid fa-route"></i> <span data-i18n="track_order">Buyurtmani jonli kuzatish</span>
+        </button>
+      </div>
+
+      <div id="invoiceContent"></div>
+    </div>
+  </div>
+
+  <!-- Live Order Tracking Modal -->
+  <div class="modal-overlay" id="trackingModal" style="z-index: 370;">
+    <div class="modal-container" style="max-width: 700px; padding: 0;">
+      <button class="modal-close-btn" onclick="OrderTracker.close()" style="top: 1rem; right: 1rem;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="trackingContainer"></div>
+    </div>
+  </div>
+
+  <!-- Authentication Modal (Login / Register) -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-container" style="max-width: 460px; padding: 2rem;">
+      <button class="modal-close-btn" onclick="App.closeAuthModal()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 0.75rem;">
+        <button class="btn btn-secondary active" id="authLoginTabBtn" onclick="App.switchAuthTab('login')" style="flex: 1;" data-i18n="nav_login">Kirish</button>
+        <button class="btn btn-secondary" id="authRegTabBtn" onclick="App.switchAuthTab('register')" style="flex: 1;" data-i18n="nav_register">Ro'yxatdan o'tish</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginFormContainer">
+        <form onsubmit="App.handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="loginEmail" placeholder="admin@globalshop.de yoki user@globalshop.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parol</label>
+            <input type="password" class="form-input" id="loginPassword" placeholder="••••••••" required>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">
+            💡 <strong>Demo Hisoblar:</strong><br>
+            • Admin: admin@globalshop.de / admin123<br>
+            • User: user@globalshop.com / user123
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;" data-i18n="nav_login">Kirish</button>
+        </form>
+      </div>
+
+      <!-- Register Form -->
+      <div id="registerFormContainer" style="display: none;">
+        <form onsubmit="App.handleRegister(event)">
+          <div class="form-group">
+            <label class="form-label">Ism-Familiya</label>
+            <input type="text" class="form-input" id="regName" placeholder="Umidjon R." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="regEmail" placeholder="sizning@email.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parol</label>
+            <input type="password" class="form-input" id="regPassword" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Telefon</label>
+            <input type="tel" class="form-input" id="regPhone" placeholder="+998 90 123 45 67">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Shahar</label>
+            <input type="text" class="form-input" id="regCity" placeholder="Toshkent">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;" data-i18n="nav_register">Ro'yxatdan o'tish</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Profile Modal -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-container" style="max-width: 500px; padding: 0;">
+      <button class="modal-close-btn" onclick="document.getElementById('profileModal').classList.remove('active')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div id="profileModalContainer"></div>
+    </div>
+  </div>
+
+  <!-- User Orders Modal -->
+  <div class="modal-overlay" id="ordersModal">
+    <div class="modal-container" style="max-width: 700px; padding: 2rem;">
+      <button class="modal-close-btn" onclick="document.getElementById('ordersModal').classList.remove('active')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 style="font-size: 1.4rem; margin-bottom: 1.25rem;" data-i18n="nav_orders">Buyurtmalarim</h3>
+      <div id="ordersListContainer"></div>
+    </div>
+  </div>
+
+  <!-- Wishlist Modal -->
+  <div class="modal-overlay" id="wishlistModal">
+    <div class="modal-container" style="max-width: 700px; padding: 2rem;">
+      <button class="modal-close-btn" onclick="document.getElementById('wishlistModal').classList.remove('active')">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 style="font-size: 1.4rem; margin-bottom: 1.25rem;" data-i18n="nav_wishlist">Saralangan Mahsulotlar</h3>
+      <div id="wishlistContainer"></div>
+    </div>
+  </div>
+
+  <!-- Admin Suite Modal -->
+  <div class="modal-overlay" id="adminModal" style="z-index: 380;">
+    <div class="modal-container admin-modal-container">
+      <button class="modal-close-btn" onclick="AdminController.close()" style="top: 1rem; right: 1rem;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="admin-sidebar">
+        <div style="font-weight: 800; font-size: 1.1rem; color: var(--primary-light); margin-bottom: 1rem; padding-left: 0.5rem;">
+          <i class="fa-solid fa-crown"></i> Admin Suite
+        </div>
+        <button class="admin-nav-item active" data-tab="dashboard" onclick="AdminController.switchTab('dashboard')">
+          <i class="fa-solid fa-chart-pie"></i> <span data-i18n="admin_tab_dashboard">Boshqaruv</span>
+        </button>
+        <button class="admin-nav-item" data-tab="products" onclick="AdminController.switchTab('products')">
+          <i class="fa-solid fa-boxes-stacked"></i> <span data-i18n="admin_tab_products">Mahsulotlar</span>
+        </button>
+        <button class="admin-nav-item" data-tab="orders" onclick="AdminController.switchTab('orders')">
+          <i class="fa-solid fa-truck-ramp-box"></i> <span data-i18n="admin_tab_orders">Buyurtmalar</span>
+        </button>
+        <button class="admin-nav-item" data-tab="analytics" onclick="AdminController.switchTab('analytics')">
+          <i class="fa-solid fa-chart-line"></i> <span data-i18n="admin_tab_analytics">Analitika</span>
+        </button>
+      </div>
+
+      <div class="admin-content" id="adminContentArea"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Interactive 10-Slide Pitch Presentation Modal (Pitch Deck + Audio Guide)
+       ========================================================================== -->
+  <div class="presentation-modal" id="presentationModal">
+    <div class="pres-header">
+      <div class="pres-title-wrap">
+        <span class="pres-badge">Pitch Deck 2026</span>
+        <h3 style="font-size: 1.1rem;">GlobalShop: Lastenheft &amp; Technical Presentation</h3>
+      </div>
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="btn btn-secondary" onclick="PresentationController.close()">
+          <i class="fa-solid fa-xmark"></i> Yopish (ESC)
+        </button>
+      </div>
+    </div>
+
+    <div class="pres-body">
+      <div id="slideViewContainer" style="width: 100%; display: flex; justify-content: center;"></div>
+    </div>
+
+    <div class="pres-footer">
+      <button class="btn btn-secondary" id="presPrevBtn" onclick="PresentationController.prevSlide(); AudioFX.playClick();">
+        <i class="fa-solid fa-arrow-left"></i> Oldingi Slayd
+      </button>
+
+      <div class="slide-dots" id="slideDotsContainer"></div>
+
+      <button class="btn btn-primary" id="presNextBtn" onclick="PresentationController.nextSlide(); AudioFX.playClick();">
+        Keyingi Slayd <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       AI Shopping Assistant Floating Widget
+       ========================================================================== -->
+  <button class="ai-widget-trigger" id="aiWidgetTrigger" onclick="AIAssistant.toggle(); AudioFX.playClick();" title="AI Yordamchi">
+    <i class="fa-solid fa-wand-magic-sparkles"></i>
+    <span class="ai-widget-bubble">AI</span>
+  </button>
+
+  <div class="ai-chat-window" id="aiChatWindow">
+    <div class="ai-chat-header">
+      <div class="ai-header-info">
+        <div class="ai-avatar"><i class="fa-solid fa-robot"></i></div>
+        <div>
+          <h4 style="font-size: 0.95rem; font-weight: 700;" data-i18n="ai_title">AI Global Yordamchi</h4>
+          <span class="ai-status-text" data-i18n="ai_subtitle">Online • 4 tilda xizmat ko'rsatadi</span>
+        </div>
+      </div>
+      <button class="btn-close-drawer" onclick="AIAssistant.toggle()" style="width: 28px; height: 28px;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="ai-messages-container" id="aiMessagesContainer"></div>
+
+    <div class="ai-quick-prompts">
+      <button class="prompt-pill" onclick="AIAssistant.sendQuick('Eng mashhur tovarlar qaysi?')" data-i18n="ai_quick_1">Top tovarlar</button>
+      <button class="prompt-pill" onclick="AIAssistant.sendQuick('Chegirma promokod bormi?')" data-i18n="ai_quick_2">Chegirma kodi</button>
+      <button class="prompt-pill" onclick="AIAssistant.sendQuick('Yetkazib berish qancha vaqt oladi?')" data-i18n="ai_quick_3">Yetkazish</button>
+      <button class="prompt-pill" onclick="AIAssistant.sendQuick('Elektronika toifasini ko\'rsat')" data-i18n="ai_quick_4">Elektronika</button>
+    </div>
+
+    <div class="ai-input-area">
+      <input type="text" class="ai-chat-input" id="aiChatInput" placeholder="Savolingizni yozing..." data-i18n="ai_placeholder">
+      <button class="btn-ai-send" onclick="AIAssistant.sendUserMessage()">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Site Footer
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="logo-wrapper" style="margin-bottom: 1rem;">
+          <div class="logo-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="logo-text">Global<span class="gradient-text">Shop</span></div>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; max-width: 320px;">
+          Xalqaro darajadagi ko'p tilli va ko'p valyutali e-tijorat platformasi. Germaniya va butun dunyo bo'ylab xavfsiz to'lov va xaridlar.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigatsiya</h4>
+        <ul class="footer-links">
+          <li><a href="#" onclick="window.scrollTo({top:0, behavior:'smooth'})" data-i18n="nav_home">Bosh sahifa</a></li>
+          <li><a href="#catalogSection" data-i18n="nav_catalog">Katalog</a></li>
+          <li><a href="#" onclick="PresentationController.open()" data-i18n="nav_presentation">10-Slayd Prezentatsiya</a></li>
+          <li><a href="#" onclick="AdminController.open()" data-i18n="nav_admin">Boshqaruv Paneli</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Toifalar</h4>
+        <ul class="footer-links">
+          <li><a href="#catalogSection" onclick="App.filterByCategory('electronics')" data-i18n="cat_electronics">Elektronika</a></li>
+          <li><a href="#catalogSection" onclick="App.filterByCategory('fashion')" data-i18n="cat_fashion">Kiyim-kechak</a></li>
+          <li><a href="#catalogSection" onclick="App.filterByCategory('home')" data-i18n="cat_home">Uy va Oshxona</a></li>
+          <li><a href="#catalogSection" onclick="App.filterByCategory('accessories')" data-i18n="cat_accessories">Aksessuarlar</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Xavfsizlik &amp; To'lovlar</h4>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">
+          Stripe PCI-DSS 256-bit SSL shifrlash, 3D Secure 2.0 himoyalangan to'lovlar.
+        </p>
+        <div style="display: flex; gap: 0.75rem; font-size: 1.6rem; color: var(--text-muted);">
+          <i class="fa-brands fa-cc-stripe"></i>
+          <i class="fa-brands fa-cc-visa"></i>
+          <i class="fa-brands fa-cc-mastercard"></i>
+          <i class="fa-brands fa-cc-apple-pay"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>&copy; 2026 GlobalShop Inc. Barcha huquqlar himoyalangan. Ishlab chiquvchi: Umidjon</div>
+      <div>Designed for International Excellence &amp; German Standard Interviews</div>
+    </div>
+  </footer>
+
+  <!-- Scripts Hierarchy -->
+  <script src="js/i18n.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/order-tracking.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/ai-assistant.js"></script>
+  <script src="js/presentation.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration error:', err));
+      });
+    }
+  </script>
+</body>
+</html>

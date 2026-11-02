@@ -1,0 +1,52 @@
+﻿
+PROYEKTDOKUMENTATION &amp; PROJEKTPLANLOYIHA HUJJATLARI VA REJASI
+GlobalShop: Lastenheft (Texnik Topshiriq) &amp; Presentation Plan (Prezentatsiya Rejasi)
+
+1. Lastenheft / Texnik Topshiriq (Technical Specification)
+Dieses Dokument enthält die vollständigen funktionalen und technischen Anforderungen für das E-Commerce-Projekt. / Ushbu hujjat e-tijorat loyihasining to'liq funksional va texnik talablarini o'z ichiga oladi.
+• Projektname / Loyiha nomi: GlobalShop - Ko'p tilli E-tijorat Platformasi (Multi-language E-commerce Platform)• Sprachen / Dastur tillari: Deutsch (DE), English (EN), O'zbekcha (UZ), Русский (RU)
+Bereich / Kategoriya
+Beschreibung auf Deutsch (DE)
+O'zbek tilidagi tavsifi (UZ)
+Objective / Maqsad
+Entwicklung einer hochsicheren, mandantenfähigen und skalierbaren E-Commerce-Plattform mit nativer Mehrsprachigkeit zur Unterstützung des globalen Handels.
+Global savdoni qo'llab-quvvatlash uchun yuqori darajada xavfsiz, kengayuvchan va ko'p tilli e-tijorat platformasini yaratish.
+Frontend Stack
+React.js Single Page Application (SPA) mit Tailwind CSS für responsives Design. i18next-Bibliothek zur dynamischen Lokalisierung ohne Seiten-Reloads.
+React.js arxitekturasi, responsiv dizayn uchun Tailwind CSS va sahifani qayta yuklamasdan dinamik tarjima qilish uchun i18next kutubxonasi.
+Backend Stack
+Node.js mit Express-Framework. RESTful-API-Design, asynchrone Prozessverarbeitung und nahtlose Stripe-Payment-Gateway-Integration.
+Node.js va Express freymvorki. RESTful API arxitekturasi, asinxron jarayonlar va Stripe to'lov tizimining to'liq integratsiyasi.
+Datenbank / Ma'lumotlar bazasi
+MongoDB (NoSQL) oder PostgreSQL (Relational) zur persistenten Speicherung von Nutzerdaten, Produktkatalogen und Bestellhistorien.
+Foydalanuvchilar ma'lumotlari, mahsulot kataloglari va buyurtmalar tarixini ishonchli saqlash uchun MongoDB yoki PostgreSQL bazasi.
+Core Features / Asosiy funksiyalar
+Sichere JWT-basierte Benutzerauthentifizierung, dynamischer Warenkorb im State-Management, Produktbewertungen und ein umfassendes Admin-Dashboard.
+JWT-ga asoslangan xavfsiz login-parol tizimi, mahsulot savatchasi, mahsulotlarga qoldirilgan sharhlar va to'liq administrator boshqaruv paneli.
+Payment / To'lov tizimi
+Sicherer, PCI-DSS-konformer Checkout über die Stripe-API mit automatischer Währungsumrechnung und Webhook-Verarbeitung.
+Stripe API orqali xavfsiz va PCI-DSS xalqaro standartlariga mos to'lov tizimi, avtomatik valyuta konvertatsiyasi va webhook-lar.
+
+2. Präsentationsstruktur / Prezentatsiya Rejasi
+Diese 10-Folien-Struktur folgt dem professionellen Storytelling-Ansatz für Interviews in Deutschland. / Ushbu 10 ta slayddan iborat reja Germaniyadagi intervyular standartiga mos keladigan hikoya (storytelling) uslubida tuzilgan.
+Folie 1: Einleitung / 1-slayd: Kirish
+• DE: Titel: 'GlobalShop: Eine Full-Stack-E-Commerce-Plattform'. Vorstellung des Entwicklers, Projekthintergrund und die Vision des globalen, barrierefreien Handels.• UZ: Slayd nomi: 'GlobalShop: To'liq tsiklli (Full-stack) E-tijorat loyihasi'. Ishlab chiquvchining tanishtiruvi, loyihaning kelib chiqishi va global savdo viziyasi.
+Folie 2: Problem &amp; Lösung / 2-slayd: Muammo va Yechim
+• DE: Problem: Kleine Unternehmen scheitern am internationalen Markt aufgrund fehlender Mehrsprachigkeit und komplexer Zahlungssysteme. Lösung: Eine schlüsselfertige, lokalisierte Plattform.• UZ: Muammo: Kichik biznes subyektlari ko'p tillilik yetishmasligi va murakkab to'lov tizimlari sababli xalqaro bozorga chiqa olmaydilar. Yechim: Tayyor, mahalliylashtirilgan platforma.
+Folie 3: Kernfunktionen / 3-slayd: Asosiy vazifalar
+• DE: Nahtloser Sprachwechsel (UZ, DE, EN, RU), persistenter Warenkorb und integrierte globale Zahlungsabwicklung via Stripe.• UZ: To'rt xil tilda (UZ, DE, EN, RU) xatosiz ishlash, savatcha boshqaruvi va Stripe orqali integratsiya qilingan xalqaro to'lovlar.
+Folie 4: Technologie-Stack / 4-slayd: Texnologik stek
+• DE: Frontend: React (Hooks, Context API), Tailwind CSS. Backend: Node.js, Express. APIs: Stripe, i18next. Datenbank: MongoDB.• UZ: Frontend: React (Hooks, Context API), Tailwind CSS. Backend: Node.js, Express. API-lar: Stripe, i18next. Ma'lumotlar bazasi: MongoDB.
+Folie 5: Datenstruktur &amp; Architektur / 5-slayd: Ma'lumotlar strukturasi
+• DE: Datenfluss-Visualisierung: Client-Anfrage -&gt; JWT Validierung -&gt; DB-Abfrage -&gt; API-Antwort. Bestellungs- und Produktbeziehungen.• UZ: Ma'lumotlar oqimining vizualizatsiyasi: Mijoz so'rovi -&gt; JWT validatsiyasi -&gt; Baza so'rovi -&gt; API javobi. Buyurtma va mahsulot aloqalari.
+Folie 6: Internationalisierung (i18next) / 6-slayd: Ko'p tillilik xususiyati
+• DE: Architektur der Übersetzung: Strukturierte JSON-Dateien für jede Sprache. Lazy-Loading von Übersetzungsressourcen zur Optimierung der Ladezeit.• UZ: Tarjima arxitekturasi: Har bir til uchun alohida strukturaviy JSON fayllari. Sayt yuklanishini tezlashtirish uchun tarjimalarni 'Lazy-loading' usulida yuklash.
+Folie 7: Sicherheit &amp; Zahlungsabwicklung / 7-slayd: Xavfsizlik va To'lovlar
+• DE: Schutz sensibler Daten. Verwendung von verschlüsselten JWT (JSON Web Tokens) im HTTP-Only Cookie. Stripe Tokenisierung verhindert Speicherung von Kreditkartendaten auf eigenen Servern.• UZ: Nozik ma'lumotlarni himoya qilish. HTTP-Only kuki-fayllarida shifrlangan JWT tokenlardan foydalanish. Stripe tokenizatsiyasi tufayli kredit karta ma'lumotlarini o'z serverimizda saqlamaslik.
+Folie 8: Technische Herausforderungen / 8-slayd: Qiyinchiliklar va Yechimlar
+• DE: Herausforderung: Race Conditions beim gleichzeitigen Ändern des Warenkorbs und asynchrone Stripe Webhook-Verzögerungen. Lösung: Implementierung von optimistischem UI-Updating und robusten Datenbank-Transaktionen.• UZ: Qiyinchilik: Savatchani bir vaqtda o'zgartirishdagi asinxron xatoliklar va Stripe Webhook kechikishlari. Yechim: 'Optimistic UI' yangilanishlarini joriy etish va mustahkam ma'lumotlar bazasi tranzaksiyalari.
+Folie 9: Fazit &amp; Ausblick / 9-slayd: Xulosa va kelajakdagi rejalar
+• DE: Zusammenfassung des Erfolgs. Zukünftige Roadmap: Integration eines KI-gestützten Kundenservice-Chatbots für mehrsprachigen Support rund um die Uhr.• UZ: Loyiha muvaffaqiyati yakuni. Kelajakdagi rejalar: 24/7 rejimida ko'p tilli mijozlarga xizmat ko'rsatuvchi sun'iy intellekt (AI) chatbotini tizimga integratsiya qilish.
+Folie 10: Fragen &amp; Antworten / 10-slayd: Savollar va javoblar
+• DE: Einladung zur Diskussion. Bereithaltung von technischen Backup-Folien (Code-Snippets der API-Routen).• UZ: Muhokama va muloqot uchun vaqt. Texnik zaxira slaydlarini (API kod qismlari) savollar uchun tayyorlab qo'yish.
+

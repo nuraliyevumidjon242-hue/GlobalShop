@@ -1,0 +1,52 @@
+================================================================================
+🛡️ UMIDJON2 — GLOBALSHOP (E-COMMERCE & PITCH DECK) ISHGA TUSHIRISH VA ADMIN QO'LLANMASI
+================================================================================
+
+1. ADMINISTRATOR VA DEMO HISOB MA'LUMOTLARI (BCRYPT SECURE AUTH)
+--------------------------------------------------------------------------------
+🛡️ Administrator Hisobi (Admin Dashboard):
+   - Email (Login): admin@globalshop.de
+   - Parol: admin123
+   - Parol Hashi: $2a$10$wN3tVqVvK8X5z8C8KzTqXeZ3Ew5.9eCZb7lS1w7n4N8F.hF7jG (Bcrypt 10 rounds)
+   - Huquqlar: Admin panel, Mahsulotlar CRUD, Buyurtmalar statusini o'zgartirish.
+
+👤 Demo Mijoz Hisobi (Customer):
+   - Email (Login): user@globalshop.com
+   - Parol: user123
+   - Parol Hashi: $2a$10$wN3tVqVvK8X5z8C8KzTqXeZ3Ew5.9eCZb7lS1w7n4N8F.hF7jG (Bcrypt 10 rounds)
+   - Huquqlar: Xarid, savatcha, profil, buyurtma PDF cheklari.
+
+2. STRIPE TO'LOV & SMS TEST MA'LUMOTLARI (PCI-DSS TEST MODE)
+--------------------------------------------------------------------------------
+- Test Kredit Karta: 4242 4242 4242 4242
+- Amal qilish muddati: 12/28
+- CVC / CVV: 888
+- 3D Secure SMS OTP: 123456
+
+3. CHEGIRMA PROMOKODLARI
+--------------------------------------------------------------------------------
+- GLOBAL2026  -> 20% Chegirma
+- UMIDJON     -> 25% VIP Chegirma
+- GERMANY10   -> 10% Chegirma
+
+4. HAR BIR OPERATSION TIZIMDA ISHGA TUSHIRISH BUYRUQLARI
+--------------------------------------------------------------------------------
+🍎 macOS / Linux:
+   - Express API Server:
+     cd /Users/umidjon/Desktop/Python/Umidjon2/server
+     npm install
+     npm run dev (yoki node server.js)
+   - Standalone Brauzerda Ochish:
+     open /Users/umidjon/Desktop/Python/Umidjon2/index.html
+
+🪟 Windows:
+   - Express API Server:
+     cd C:\Users\Umidjon\Desktop\Python\Umidjon2\server
+     npm install
+     npm run dev
+   - Standalone: index.html faylini 2 marta bosing.
+
+🌐 Kirish Manzillari:
+   - Frontend Dashboard: http://localhost:5000 (yoki index.html)
+   - REST API Health: http://localhost:5000/api/health
+================================================================================

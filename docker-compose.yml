@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  globalshop:
+    build: .
+    container_name: globalshop_app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+    networks:
+      - globalshop_net
+
+networks:
+  globalshop_net:
+    driver: bridge
