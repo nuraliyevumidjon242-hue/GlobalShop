@@ -1,110 +1,190 @@
-# 🌐 GlobalShop - Ko'p Tilli va Ko'p Valyutali E-Tijorat Platformasi (2026)
+# GlobalShop
 
-![Security Level](https://img.shields.io/badge/Security_Level-100%25_Bcrypt-brightgreen?style=for-the-badge&logo=shield)
-![Internationalization](https://img.shields.io/badge/i18n-DE%20%7C%20EN%20%7C%20UZ%20%7C%20RU-blue?style=for-the-badge)
-![Payment Gateway](https://img.shields.io/badge/Stripe-PCI--DSS_Simulated-purple?style=for-the-badge)
-![Presentation Mode](https://img.shields.io/badge/Pitch_Deck-10_Slides_Active-orange?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+> A multilingual, multi-currency e-commerce demo with an interactive pitch deck.
 
-> **Nemis standarti (Lastenheft) asosida ishlab chiqilgan to'liq tsiklli (Full-Stack) E-Commerce tizimi va Interaktiv Taqdimot moduli**
+[O'zbekcha](#uzbek-ozbekcha) · [English](#english) · [Deutsch](#deutsch) · [English pitch deck](#english-pitch-deck)
 
 ---
 
-## 📌 Loyiha Haqida
+## Uzbek (O'zbekcha)
 
-**GlobalShop** — xalqaro bozorga chiqishni xohlovchi bizneslar uchun mo'ljallangan, to'liq mahalliylashtirilgan (DE, EN, UZ, RU), ko'p valyutali (USD, EUR, UZS, RUB), yuqori darajada xavfsiz va zamonaviy e-tijorat platformasi.
+GlobalShop — xalqaro savdo tajribasini namoyish etuvchi ko'p tilli e-commerce demo loyihasi. Unda mahsulotlar katalogi, savatcha, checkout, admin paneli va interaktiv taqdimot mavjud.
 
-Loyiha `GlobalShop_Texnik_Topshiriq_va_Prezentatsiya.docx` hujjati talablari asosida 100% bajarildi va eng so'nggi 2026-yilgi aktual texnologiyalar hamda xavfsizlik standartlari (Bcrypt 10 rounds, JWT, OWASP Security Headers) bilan boyitildi.
+### Imkoniyatlar
 
----
+- **4 ta til:** o'zbek, ingliz, nemis va rus tillarida interfeys.
+- **4 ta valyuta:** USD, EUR, UZS va RUB ko'rinishida narxlar.
+- Mahsulotlarni ko'rish, qidirish, saralash va savatchaga qo'shish.
+- Demo checkout va buyurtma holatini kuzatish.
+- JWT asosidagi login/registratsiya API-si va bcrypt parol xeshlash.
+- Mahsulotlar va buyurtmalarni boshqarish uchun admin paneli.
+- Xarid bo'yicha tavsiyalar beruvchi demo AI yordamchisi.
+- 10 slaydli interaktiv pitch deck va PWA manifest/service worker.
 
-## ✨ Asosiy Xususiyatlar & Yangi Fishkalar
+### Texnologiyalar
 
-### 1. 🌍 To'liq 4 Tilli Mahalliyllashtirish (i18n)
-- **Nemischa (DE)**, **Inglizcha (EN)**, **O'zbekcha (UZ)** va **Ruscha (RU)**.
-- Sahifani qayta yuklamasdan real vaqtda bir zumda butun interfeys, katalog va tavsiflar tarjimasi.
+- Frontend: HTML, CSS va brauzer JavaScript.
+- Backend: Node.js va Express REST API.
+- Qo'shimcha: JWT, bcryptjs va Stripe SDK (kalit sozlanganda).
 
-### 2. 💱 Real-Vaqtda Ko'p Valyutali Tizim (Multi-Currency)
-- **USD ($)**, **EUR (€)**, **UZS (so'm)** va **RUB (₽)**.
-- Barcha narxlar, chegirmalar, yetkazib berish va hisob-fakturalar avtomatik joriy kurs bo'yicha hisoblanadi.
+### Ishga tushirish
 
-### 3. 💳 Xavfsiz To'lov (Stripe PCI-DSS & 3D Secure Simulyatsiya)
-- Luhn algoritmi asosidagi kredit karta validatsiyasi.
-- 3D Secure 2.0 SMS-kod tasdiqlash oynasi.
-- Xariddan so'ng rasmiy soliq invoysi (PDF/Print chek) generatsiyasi va chop etish.
+Node.js backend va frontendni birga ishga tushirish:
 
-### 4. 🤖 AI Shopping Assistant (Aqlli Sun'iy Intellekt Maslahatchisi)
-- 4 tilda mijozga tovarlarni tavsiya qiluvchi, savatcha holatini hisoblab beruvchi va maxsus promokodlarni taqdim etuvchi AI chatbot.
-
-### 5. 📦 Jonli Kuryer Buyurtma Kuzatuvi (Live Order Tracking)
-- Xaritada kuryerning harakati va 4 bosqichli buyurtma holati animatsiyasi (Ordered ➔ Packed ➔ Shipped ➔ Delivered).
-
-### 6. 🎤 Interaktiv 10-Slaydli Taqdimot Rejimi (Pitch Deck)
-- Germaniyadagi texnik intervyular uchun mo'ljallangan 10 ta slaydning nemis va o'zbek tillaridagi to'liq interaktiv taqdimoti, arxitektura diagrammalari va kod namunalari.
-
-### 7. 🛡️ Administrator Paneli & Bcrypt Hashing (100% Xavfsiz)
-- Mahsulotlar CRUD (qo'shish, tahrirlash, o'chirish, rasm manzillari).
-- Buyurtmalar holatini boshqarish va yangilash.
-- Parollar faqat **Bcrypt (10 rounds)** bilan hashlanadi, hardcoded bypass to'liqligicha olib tashlangan.
-
----
-
-## 🚀 Qanday Ishga Tushiriladi?
-
-### 1-Usul: Node.js & Express REST API Serveri Bilan (Tavsiya etiladi)
 ```bash
 cd server
 npm install
 npm run dev
 ```
-So'ng brauzeringizda `http://localhost:5000` manziliga kiring.
 
-### 2-Usul: Brauzerda To'g'ridan-To'g'ri Ochish (Standalone Preview)
-`index.html` faylini istalgan brauzerda oching.
+Brauzerda `http://localhost:5000` manzilini oching. Faqat frontendni ko'rish uchun `index.html` faylini bevosita ochish mumkin, ammo API talab qiladigan imkoniyatlar bunda ishlamasligi mumkin.
 
----
+### Demo ma'lumotlari
 
-## 👤 Demo Hisoblar (admin.txt da saqlanadi)
+Demo hisoblari va test checkout ma'lumotlari [admin.txt](./admin.txt) faylida keltirilgan. Ularni faqat lokal demo uchun ishlating; haqiqiy parollar yoki to'lov ma'lumotlari bilan almashtirmang.
 
-| Rol | Email | Parol | Huquqlar |
-|---|---|---|---|
-| **Administrator** | `admin@globalshop.de` | `admin123` | To'liq admin paneli, mahsulotlar CRUD, buyurtmalar boshqaruvi |
-| **Mijoz (User)** | `user@globalshop.com` | `user123` | Xaridlar, savatcha, profil, buyurtmalar tarixi |
+### Muhim cheklovlar
 
----
+Bu loyiha demo/prototip bo'lib, production uchun tayyor tizim emas. Backendda foydalanuvchilar, mahsulotlar va buyurtmalar uchun doimiy ma'lumotlar bazasi sozlanmagan; to'lov jarayonining ayrim qismlari simulyatsiya qilinadi. Haqiqiy foydalanishdan oldin ma'lumotlar bazasi, autentifikatsiya va ruxsatlar nazorati, HTTPS, server sozlamalari hamda to'lov provayderini sozlash va tekshirish kerak.
 
-## 🎟️ Test Chegirma Promokodlari
-- `GLOBAL2026` — **20% Chegirma**
-- `UMIDJON` — **25% VIP Chegirma**
-- `GERMANY10` — **10% Chegirma**
+### Лиценз
+
+Backend `package.json` faylida MIT litsenziyasi ko'rsatilgan. Loyiha ildizida alohida `LICENSE` fayli mavjud bo'lsa, uning shartlariga qarang.
 
 ---
 
-## 📂 Fayllar Strukturasi
+## English
 
+GlobalShop is a multilingual e-commerce demo showcasing an international shopping experience. It includes a product catalog, cart, checkout flow, admin dashboard, and interactive pitch deck.
+
+### Features
+
+- **Four interface languages:** Uzbek, English, German, and Russian.
+- **Four currencies:** USD, EUR, UZS, and RUB.
+- Browse, search, sort, and add products to the cart.
+- Demo checkout and order-status tracking.
+- JWT-based login/registration API with bcrypt password hashing.
+- Admin dashboard for product and order management.
+- Demo AI shopping assistant with product recommendations.
+- Interactive 10-slide pitch deck and PWA manifest/service worker.
+
+### Technology
+
+- Frontend: HTML, CSS, and browser JavaScript.
+- Backend: Node.js and Express REST API.
+- Additional libraries: JWT, bcryptjs, and Stripe SDK (when configured).
+
+### Run locally
+
+Start the backend and serve the frontend:
+
+```bash
+cd server
+npm install
+npm run dev
 ```
-Umidjon2/
-├── index.html                   # Markaziy Web ilova sahifasi
-├── admin.txt                    # Admin login & ishga tushirish ma'lumotlari
-├── css/
-│   └── style.css                # 2026 Glassmorphism & Neon Dizayn tizimi
-├── js/
-│   ├── i18n.js                  # 4 tildagi (UZ, DE, EN, RU) tarjimalar lug'ati
-│   ├── products.js              # Mahsulotlar bazasi va spetsifikatsiyalar
-│   ├── store.js                 # Markaziy State & Valyuta konvertori
-│   ├── auth.js                  # REST API & JWT autentifikatsiya moduli
-│   ├── cart.js                  # Savatcha va hisob-kitoblar draweri
-│   ├── checkout.js              # Stripe to'lov va PDF chek generatsiyasi
-│   ├── order-tracking.js        # Jonli kuryer buyurtma kuzatuv xaritasi
-│   ├── admin.js                 # To'liq Administrator boshqaruv paneli
-│   ├── ai-assistant.js          # Ko'p tilli AI Shopping chatbot
-│   ├── presentation.js          # 10 ta slaydli Pitch Deck taqdimot tizimi
-│   └── app.js                   # Asosiy birlashtiruvchi boshqaruvchi
-├── server/
-│   ├── package.json             # Backend bog'liqliklari
-│   ├── server.js                # Express server (Security Headers + Helmet)
-│   ├── routes/                  # RESTful API yo'nalishlari (Bcrypt Auth)
-│   ├── .env.example             # Muhit o'zgaruvchilari namunasi
-│   └── README.md                # Server qo'llanmasi
-└── README.md                    # Loyiha umumiy hujjati
+
+Open `http://localhost:5000` in your browser. You can also open `index.html` directly for a frontend preview, but features that depend on the API may not work.
+
+### Demo credentials
+
+Demo accounts and checkout test details are documented in [admin.txt](./admin.txt). Use them only for local demonstrations; do not reuse real passwords or payment details.
+
+### Limitations
+
+This is a demo/prototype, not a production-ready commerce system. A persistent database for users, products, and orders is not configured in the backend, and some payment flows run in simulated mode. Before real-world use, configure and review persistent storage, authentication and authorization, HTTPS, server deployment, and a real payment provider.
+
+### License
+
+The project declares the MIT license. See [LICENSE](./LICENSE) if the license file is present.
+
+---
+
+## Deutsch
+
+GlobalShop ist eine mehrsprachige E-Commerce-Demo, die ein internationales Einkaufserlebnis präsentiert. Das Projekt umfasst einen Produktkatalog, Warenkorb, Checkout-Ablauf, ein Admin-Dashboard und eine interaktive Präsentation.
+
+### Funktionen
+
+- **Vier Oberflächensprachen:** Usbekisch, Englisch, Deutsch und Russisch.
+- **Vier Währungen:** USD, EUR, UZS und RUB.
+- Produkte anzeigen, suchen, sortieren und in den Warenkorb legen.
+- Demo-Checkout und Verfolgung des Bestellstatus.
+- JWT-basierte Login-/Registrierungs-API mit bcrypt-Passwort-Hashing.
+- Admin-Dashboard zur Verwaltung von Produkten und Bestellungen.
+- Demo-Kaufassistent mit Produktempfehlungen.
+- Interaktives Pitch Deck mit 10 Folien sowie PWA-Manifest und Service Worker.
+
+### Technologie
+
+- Frontend: HTML, CSS und JavaScript im Browser.
+- Backend: Node.js und Express REST API.
+- Weitere Bibliotheken: JWT, bcryptjs und Stripe SDK (bei entsprechender Konfiguration).
+
+### Lokal starten
+
+Backend starten und Frontend bereitstellen:
+
+```bash
+cd server
+npm install
+npm run dev
 ```
+
+Anschließend `http://localhost:5000` im Browser öffnen. Für eine reine Frontend-Vorschau kann auch `index.html` direkt geöffnet werden; API-abhängige Funktionen sind dabei möglicherweise nicht verfügbar.
+
+### Demo-Zugangsdaten
+
+Demo-Konten und Checkout-Testdaten stehen in [admin.txt](./admin.txt). Diese Daten sind ausschließlich für lokale Demonstrationen gedacht. Verwenden Sie keine echten Passwörter oder Zahlungsdaten.
+
+### Einschränkungen
+
+Dieses Projekt ist eine Demo/ein Prototyp und kein produktionsreifes Shopsystem. Eine persistente Datenbank für Benutzer, Produkte und Bestellungen ist im Backend nicht eingerichtet; einige Zahlungsabläufe werden simuliert. Vor einem realen Einsatz müssen persistente Speicherung, Authentifizierung und Autorisierung, HTTPS, Serverbetrieb und ein echter Zahlungsanbieter eingerichtet und überprüft werden.
+
+### Lizenz
+
+Das Projekt gibt eine MIT-Lizenz an. Falls vorhanden, finden Sie die Lizenzbedingungen in [LICENSE](./LICENSE).
+
+---
+
+## English pitch deck
+
+### Slide 1 — GlobalShop: Shopping without borders
+
+GlobalShop is a multilingual e-commerce demo designed to make an international shopping experience easier to explore. It brings the storefront, shopping flow, administration tools, and product assistance together in one web application.
+
+### Slide 2 — The challenge
+
+Customers expect to browse and shop in a language and currency that feel familiar. A small retailer building separate storefront experiences for every market can face unnecessary complexity.
+
+### Slide 3 — The concept
+
+GlobalShop demonstrates one storefront with four interface languages and four currency choices. Customers can discover products, add them to a cart, and follow a demo checkout flow.
+
+### Slide 4 — What users can do
+
+Customers can search and browse the catalog, manage a cart, explore checkout, and view order tracking. A demo shopping assistant can help surface product suggestions.
+
+### Slide 5 — The technology
+
+The frontend uses HTML, CSS, and browser JavaScript. A Node.js and Express backend exposes REST endpoints for authentication, products, orders, payments, and the assistant.
+
+### Slide 6 — Internationalization
+
+The interface supports Uzbek, English, German, and Russian. Currency selection supports USD, EUR, UZS, and RUB, allowing the demo to present the shopping experience to a wider audience.
+
+### Slide 7 — Administration and authentication
+
+The demo includes an admin dashboard for product and order workflows. The API demonstrates JWT-based authentication and bcrypt password hashing; production deployment would require a persistent database and a thorough security review.
+
+### Slide 8 — Checkout and order experience
+
+The project demonstrates checkout and order-status flows. Payment behavior can run in a simulated mode; a real deployment must configure and verify a payment provider and its webhook handling.
+
+### Slide 9 — What comes next
+
+The next step is to add persistent storage, strengthen operational security, connect a real payment provider, and validate the complete purchase lifecycle. These foundations would move the demo toward a dependable production service.
+
+### Slide 10 — Questions and live demo
+
+Thank you. I would be happy to walk through the architecture, demonstrate the storefront and admin dashboard, and discuss the technical decisions and next steps.
